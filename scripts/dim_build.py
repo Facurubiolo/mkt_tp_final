@@ -13,40 +13,31 @@ def save(df, name):
     print(f"[DW] DIM → {out.name} ({df.shape[0]} filas)")
 
 def date_id(s):
-    # s: Serie de fechas (datetime o string)
     s = pd.to_datetime(s, errors="coerce")
     return pd.to_numeric(s.dt.strftime("%Y%m%d"), errors="coerce")
 
-# --- 1) dim_channel ---
 dim_channel = pd.read_csv(RAW/"channel.csv").rename(
     columns={"code":"channel_code","name":"channel_name"}
 )
 save(dim_channel, "dim_channel.csv")
 
-# --- 2) dim_province ---
 dim_province = pd.read_csv(RAW/"province.csv").rename(
     columns={"name":"province_name","code":"province_code"}
 )
 save(dim_province, "dim_province.csv")
 
-# --- 3) dim_customer ---
 dim_customer = pd.read_csv(RAW/"customer.csv")
 save(dim_customer, "dim_customer.csv")
 
-# --- 4) dim_product ---
 dim_product = pd.read_csv(STG/"stg_product.csv")
 save(dim_product, "dim_product.csv")
 
-# --- 5) dim_store ---
 dim_store = pd.read_csv(STG/"stg_store.csv")
 save(dim_store, "dim_store.csv")
 
-# --- 6) dim_address ---
-# Leer staging de direcciones y construir dimensión de direcciones
 addr_path = STG / "stg_address.csv"
 if addr_path.exists():
     addr = pd.read_csv(addr_path)
-    # Normalizar nombres de columnas posibles
     addr = addr.rename(columns={
         "id": "address_id",
         "customer_id": "customer_id",
@@ -57,17 +48,14 @@ if addr_path.exists():
         "apartment": "apartment",
         "postal_code": "postal_code",
     })
-    # Seleccionar columnas relevantes si existen
     keep_cols = [c for c in ["address_id","customer_id","province_code","street","number","floor","apartment","postal_code"] if c in addr.columns]
     dim_address = addr[keep_cols].drop_duplicates().reset_index(drop=True)
-    # Convertir address_id a numérico si está presente
     if "address_id" in dim_address.columns:
         dim_address["address_id"] = pd.to_numeric(dim_address["address_id"], errors="coerce").astype('Int64')
     save(dim_address, "dim_address.csv")
 else:
     print("[DW] WARNING: stg_address.csv no encontrado en staging, omitiendo dim_address")
 
-# --- 6) dim_date (a partir de TODAS las fechas relevantes) ---
 so  = pd.read_csv(STG/"stg_sales_order.csv")[["order_date"]].rename(columns={"order_date":"dt"})
 shp = pd.read_csv(STG/"stg_shipment.csv")[["shipped_at","delivered_at"]].melt(value_name="dt")["dt"]
 ws  = pd.read_csv(STG/"stg_web_session.csv")[["started_at"]]

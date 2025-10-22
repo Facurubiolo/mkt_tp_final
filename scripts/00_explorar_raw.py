@@ -29,7 +29,7 @@ def ver_csv(nombre):
     print(df.head(3))  # muestra las primeras 3 filas
     print()
 
-# Listado de archivos esperados según la consigna
+# Listado de los archivos que se esperan encontrar
 candidatos = [
     "channel.csv",
     "province.csv",
