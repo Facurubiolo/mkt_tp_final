@@ -1,23 +1,26 @@
 # etl/load/load.py
-
 import pandas as pd
 from pathlib import Path
 
+# EXTRACT
 from etl.extract.extract import extract_raw_data
 
+# DIMs 
 from etl.transform.build_dim_customer import build_dim_customer
-from etl.transform.dim_address import build_dim_address
-from etl.transform.dim_product import build_dim_product
-from etl.transform.dim_store import build_dim_store
-from etl.transform.dim_channel import build_dim_channel
-from etl.transform.dim_calendar import build_dim_calendar
+from etl.transform.build_dim_address import build_dim_address
+from etl.transform.build_dim_product import build_dim_product
+from etl.transform.build_dim_store import build_dim_store
+from etl.transform.build_dim_channel import build_dim_channel
+from etl.transform.build_dim_calendar import build_dim_calendar
 
-from etl.transform.fact_sales_order import build_fact_sales_order
-from etl.transform.fact_sales_order_item import build_fact_sales_order_item
-from etl.transform.fact_payment import build_fact_payment
-from etl.transform.fact_shipment import build_fact_shipment
-from etl.transform.fact_nps_response import build_fact_nps_response
-from etl.transform.fact_web_session import build_fact_web_session
+# FACTs 
+from etl.transform.build_fact_sales_order import build_fact_sales_order
+from etl.transform.build_fact_sales_order_item import build_fact_sales_order_item
+from etl.transform.build_fact_payment import build_fact_payment
+from etl.transform.build_fact_shipment import build_fact_shipment
+from etl.transform.build_fact_web_session import build_fact_web_session
+from etl.transform.build_fact_nps_response import build_fact_nps_response
+
 
 
 # Directorio base
@@ -50,43 +53,29 @@ def save_fact(df: pd.DataFrame, name: str) -> Path:
 def run_pipeline():
     print("\n🚀 Iniciando Pipeline ETL...")
 
-    # 1) EXTRACT
+    # 1) EXTRACT (usa el nombre que tengas: extract_raw_data o extract_all)
     raw = extract_raw_data()
 
-    # 2) TRANSFORM - DIM
-    dim_customer = build_dim_customer(raw)
-    dim_address = build_dim_address(raw)
-    dim_product = build_dim_product(raw)
-    dim_store = build_dim_store(raw)
-    dim_channel = build_dim_channel(raw)
-    dim_calendar = build_dim_calendar(raw)
+    # Salida del DW
+    output_path = Path("warehouse")
 
-    # 3) LOAD - DIM
-    save_dim(dim_customer, "dim_customer")
-    save_dim(dim_address, "dim_address")
-    save_dim(dim_product, "dim_product")
-    save_dim(dim_store, "dim_store")
-    save_dim(dim_channel, "dim_channel")
-    save_dim(dim_calendar, "dim_calendar")
+    # 2) DIMENSIONS (cada build guarda su CSV en warehouse/dim)
+    build_dim_customer(raw, output_path)
+    build_dim_address(raw, output_path)
+    build_dim_product(raw, output_path)
+    build_dim_store(raw, output_path)
+    build_dim_channel(raw, output_path)
+    build_dim_calendar(raw, output_path)
 
-    # 4) TRANSFORM - FACT
-    fact_sales_order = build_fact_sales_order(raw, dim_calendar)
-    fact_sales_order_item = build_fact_sales_order_item(raw)
-    fact_payment = build_fact_payment(raw, dim_calendar)
-    fact_shipment = build_fact_shipment(raw, dim_calendar)
-    fact_nps_response = build_fact_nps_response(raw, dim_calendar)
-    fact_web_session = build_fact_web_session(raw, dim_calendar)
-
-    # 5) LOAD - FACT
-    save_fact(fact_sales_order, "fact_sales_order")
-    save_fact(fact_sales_order_item, "fact_sales_order_item")
-    save_fact(fact_payment, "fact_payment")
-    save_fact(fact_shipment, "fact_shipment")
-    save_fact(fact_nps_response, "fact_nps_response")
-    save_fact(fact_web_session, "fact_web_session")
+    # 3) FACTS (cada build guarda su CSV en warehouse/fact)
+    build_fact_sales_order(raw, output_path)
+    build_fact_sales_order_item(raw, output_path)
+    build_fact_payment(raw, output_path)
+    build_fact_shipment(raw, output_path)
+    build_fact_web_session(raw, output_path)
+    build_fact_nps_response(raw, output_path)
 
     print("\n✅ Pipeline completada con éxito!")
-
 
 # Permite ejecutar este archivo directamente
 if __name__ == "__main__":

@@ -18,7 +18,7 @@ def load_csv(filename: str) -> pd.DataFrame:
     return pd.read_csv(file_path)
 
 
-def extract_all() -> dict:
+def extract_raw_data() -> dict:
     """Carga todas las tablas raw y devuelve un diccionario {nombre: DataFrame}."""
     data = {
         # catálogos y maestros
@@ -43,6 +43,7 @@ def extract_all() -> dict:
 
 # Pequeño test manual si ejecutás este archivo directo:
 if __name__ == "__main__":
-    dfs = extract_all()
+    dfs = extract_raw_data()
+
     for name, df in dfs.items():
         print(f"{name}: {df.shape[0]} filas, {df.shape[1]} columnas")
