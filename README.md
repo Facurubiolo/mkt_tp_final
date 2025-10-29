@@ -94,3 +94,20 @@ Cada hecho tiene su propio esquema estrella, diseñado con [dbdiagram.io](https:
 | **fact_nps_response** | [📊 Star Schema - NPS](assets/star_nps_response.png) |
 
 
+## 📊 5. Consultas clave (KPIs)
+
+### 1. Ventas totales por mes
+```sql
+SELECT c.year, c.month, SUM(f.total_amount) AS ventas
+FROM fact_sales_order f
+JOIN dim_calendar c ON c.date_id = f.order_date_id
+GROUP BY c.year, c.month
+ORDER BY c.year, c.month;
+```
+
+### 2 Ticket promedio 
+```sql
+SELECT AVG(total_amount) AS ticket_promedio
+FROM fact_sales_order;
+```
+

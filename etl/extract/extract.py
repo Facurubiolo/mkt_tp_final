@@ -2,12 +2,9 @@
 import pandas as pd
 from pathlib import Path
 
-# ⬇️ Si tus CSV están en "raw/", dejá esta línea:
 ROOT = Path(__file__).resolve().parents[2]
 RAW_PATH = ROOT / "raw"
 
-# ⬇️ Si tus CSV están en "data/raw/", cambiá por:
-# RAW_PATH = ROOT / "data" / "raw"
 
 
 def load_csv(filename: str) -> pd.DataFrame:
@@ -41,7 +38,7 @@ def extract_raw_data() -> dict:
     return data
 
 
-# Pequeño test manual si ejecutás este archivo directo:
+
 if __name__ == "__main__":
     dfs = extract_raw_data()
 
