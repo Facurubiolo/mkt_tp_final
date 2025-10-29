@@ -31,11 +31,11 @@ def build_dim_calendar(data: dict, output_path: Path) -> pd.DataFrame:
     dim["year"] = dim["date"].dt.year
     dim["month"] = dim["date"].dt.month
     dim["day"] = dim["date"].dt.day
-    dim["day_of_week"] = dim["date"].dt.dayofweek + 1  # 1=Lun
+    dim["day_of_week"] = dim["date"].dt.dayofweek + 1  
     dim["quarter"] = "Q" + ((dim["month"] - 1) // 3 + 1).astype(str)
     dim["year_month"] = dim["date"].dt.strftime("%Y-%m")
 
-    # surrogate key (opcional pero útil para uniformidad)
+    # surrogate key 
     dim.insert(0, "calendar_sk", range(1, len(dim) + 1))
 
     path = Path(output_path) / "dim" / "dim_calendar.csv"

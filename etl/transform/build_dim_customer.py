@@ -7,7 +7,7 @@ def build_dim_customer(data: dict, output_path: Path) -> pd.DataFrame:
     # surrogate key
     df.insert(0, "customer_sk", range(1, len(df) + 1))
 
-    # columnas pedidas
+    # columnas 
     dim = df[[
         "customer_sk",
         "customer_id",

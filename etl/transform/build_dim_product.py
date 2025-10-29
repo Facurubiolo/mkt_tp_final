@@ -23,7 +23,6 @@ def build_dim_product(data: dict, output_path: Path) -> pd.DataFrame:
     prod.insert(0, "product_sk", range(1, len(prod) + 1))
 
     # 4) Selección y renombres finales
-    #    Si tu CSV de productos usa 'product_name' en vez de 'name', lo contemplamos.
     product_name_col = "name" if "name" in prod.columns else "product_name"
 
     cols = [
@@ -39,7 +38,7 @@ def build_dim_product(data: dict, output_path: Path) -> pd.DataFrame:
         "created_at",
     ]
 
-    # Filtrar por columnas que existan (por si alguna faltara en tu CSV)
+    # Filtrar por columnas que existan 
     cols = [c for c in cols if c in prod.columns]
 
     dim = prod[cols].drop_duplicates().rename(columns={
@@ -47,7 +46,7 @@ def build_dim_product(data: dict, output_path: Path) -> pd.DataFrame:
         "name_category": "category_name",
     })
 
-    # 5) Guardado
+    # 5) Guardamos
     path = Path(output_path) / "dim" / "dim_product.csv"
     path.parent.mkdir(parents=True, exist_ok=True)
     dim.to_csv(path, index=False)

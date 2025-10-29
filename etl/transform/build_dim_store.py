@@ -24,7 +24,7 @@ def build_dim_store(data: dict, output_path: Path) -> pd.DataFrame:
     # 3) Surrogate key
     store.insert(0, "store_sk", range(1, len(store) + 1))
 
-    # 4) Elegir columnas seguras (si no hubo choque, no habrá sufijo)
+    # 4) Elegir columnas seguras 
     store_name_col = "name_store" if "name_store" in store.columns else "name"
     created_col    = "created_at_store" if "created_at_store" in store.columns else "created_at"
 
@@ -41,7 +41,7 @@ def build_dim_store(data: dict, output_path: Path) -> pd.DataFrame:
         "country_code",
         created_col
     ]
-    # filtrar por si alguna no existe en tus CSV
+    # filtrar por si alguna no existe 
     cols = [c for c in cols if c in store.columns]
 
     dim = store[cols].drop_duplicates().rename(columns={
@@ -49,7 +49,7 @@ def build_dim_store(data: dict, output_path: Path) -> pd.DataFrame:
         created_col: "created_at"
     })
 
-    # 6) Guardar
+    # 6) Guardamos
     path = Path(output_path) / "dim" / "dim_store.csv"
     path.parent.mkdir(parents=True, exist_ok=True)
     dim.to_csv(path, index=False)

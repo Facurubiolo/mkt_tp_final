@@ -2,8 +2,8 @@
 from pathlib import Path
 
 # === Rutas absolutas, partiendo de este archivo ===
-PROJECT_ROOT = Path(__file__).resolve().parents[1]   # .../MKT_TP_FINAL
-RAW_DIR      = PROJECT_ROOT / "raw"                   # <-- tu carpeta real
+PROJECT_ROOT = Path(__file__).resolve().parents[1]   
+RAW_DIR      = PROJECT_ROOT / "raw"                  
 WH_DIM_DIR   = PROJECT_ROOT / "warehouse" / "dim"
 WH_FACT_DIR  = PROJECT_ROOT / "warehouse" / "fact"
 
