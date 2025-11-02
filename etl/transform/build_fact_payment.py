@@ -12,7 +12,7 @@ def build_fact_payment(data: dict, output_path: Path) -> pd.DataFrame:
     pay["paid_at"] = pd.to_datetime(pay["paid_at"], errors="coerce")
     pay["paid_at_date_id"] = pay["paid_at"].dt.strftime("%Y%m%d").astype("Int64")
     pay["paid_at_time"] = pay["paid_at"].dt.strftime("%H:%M:%S")
-
+    pay['billing_address_id'] = pay['billing_address_id'].astype('Int64')
     fact = pay[[
         "payment_id",
         "customer_id",

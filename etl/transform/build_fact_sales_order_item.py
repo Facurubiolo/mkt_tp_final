@@ -3,9 +3,12 @@ from pathlib import Path
 
 def build_fact_sales_order_item(data: dict, output_path: Path) -> pd.DataFrame:
     it = data["sales_order_item"].copy()
-    so = data["sales_order"][["order_id", "customer_id", "channel_id", "store_id"]].copy()
+    so = data["sales_order"][["order_id", "customer_id", "channel_id", "store_id", "order_date"]].copy()
+    so["order_date"] = pd.to_datetime(so["order_date"], errors="coerce")
+    so["order_date_id"] = so["order_date"].dt.strftime("%Y%m%d").astype("Int64")
+    so["order_date"] = so["order_date"].dt.strftime("%Y-%m-%d")
 
-    # traigo customer/channel/store desde cabecera
+    # traigo customer/channel/store y fecha desde cabecera
     it = it.merge(so, how="left", on="order_id")
 
     fact = it[[
@@ -17,7 +20,9 @@ def build_fact_sales_order_item(data: dict, output_path: Path) -> pd.DataFrame:
         "quantity",
         "unit_price",
         "discount_amount",
-        "line_total"
+        "line_total",
+        "order_date_id",
+        "order_date"
     ]].rename(columns={"order_item_id": "id"})
 
     fact.insert(0, "sales_order_item_sk", range(1, len(fact) + 1))
