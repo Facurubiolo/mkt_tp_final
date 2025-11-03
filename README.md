@@ -8,6 +8,19 @@ Repositorio del trabajo práctico final de la materia.
 
 Este proyecto implementa un pipeline **ETL completo** para la materia *Introducción al Marketing y los Negocios Digitales*, utilizando datos crudos (`raw/*.csv`) y generando un **Data Warehouse** con tablas de dimensiones y hechos en la carpeta `warehouse/`.
 
+## Arquitectura del Proyecto
+El proyecto sigue una estructura ETL clásica:
+
+1. raw/: Guarda los 13 archivos .CSV originales que simulan la base de datos transaccional (OLTP) de la empresa.
+2. etl/: Contiene toda la lógica de transformación, separada en:
+ - etl/extract/: Scripts para leer los datos desde data/raw/.
+ - etl/transform/: Scripts para limpiar, denormalizar y construir cada tabla de Dimensión y Hechos.
+ - etl/load/: Scripts para guardar los dataframes transformados en el directorio warehouse/.
+3. warehouse/: Aqui dentro se encuentran las dim y facts desnormalizadas
+ - warehouse/dim/: Contiene las tablas de dimensiones desnormalizadas
+ - warehouse/fact/: Contiene las tablas de hechos desnormalizadas
+4. main.py: El script orquestador que llama a las funciones de extract, transform y load en el orden correcto.
+
 ## 🚀 Ejecución
 
 ### 1. Clonar el repositorio
@@ -93,21 +106,4 @@ Cada hecho tiene su propio esquema estrella, diseñado con [dbdiagram.io](https:
 | **fact_web_session** | [📊 Star Schema - Sesiones Web](assets/star_web_session.png) |
 | **fact_nps_response** | [📊 Star Schema - NPS](assets/star_nps_response.png) |
 
-
-## 📊 5. Consultas clave (KPIs)
-
-### 1. Ventas totales por mes
-```sql
-SELECT c.year, c.month, SUM(f.total_amount) AS ventas
-FROM fact_sales_order f
-JOIN dim_calendar c ON c.date_id = f.order_date_id
-GROUP BY c.year, c.month
-ORDER BY c.year, c.month;
-```
-
-### 2 Ticket promedio 
-```sql
-SELECT AVG(total_amount) AS ticket_promedio
-FROM fact_sales_order;
-```
 
