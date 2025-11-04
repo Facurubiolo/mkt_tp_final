@@ -5,7 +5,7 @@ def build_dim_product(data: dict, output_path: Path) -> pd.DataFrame:
     prod = data["product"].copy()                 # product_id, sku, name, category_id, list_price, status, created_at
     cat  = data["product_category"].copy()        # category_id, name, parent_id
 
-    # 1) Traigo nombre de categoría con sufijo claro (evita name_x/name_y)
+    # 1) Traigo nombre de categoría con sufijo claro
     prod = prod.merge(
         cat[["category_id", "name", "parent_id"]],
         on="category_id",

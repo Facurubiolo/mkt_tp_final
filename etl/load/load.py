@@ -53,13 +53,13 @@ def save_fact(df: pd.DataFrame, name: str) -> Path:
 def run_pipeline():
     print("\n🚀 Iniciando Pipeline ETL...")
 
-    # 1) EXTRACT (usa el nombre que tengas: extract_raw_data o extract_all)
+    # 1) EXTRACT 
     raw = extract_raw_data()
 
     # Salida del DW
     output_path = Path("warehouse")
 
-    # 2) DIMENSIONS (cada build guarda su CSV en warehouse/dim)
+    # 2) DIMENSIONES (cada build guarda su CSV en warehouse/dim)
     build_dim_customer(raw, output_path)
     build_dim_address(raw, output_path)
     build_dim_product(raw, output_path)

@@ -8,7 +8,7 @@ def build_dim_address(data: dict, output_path: Path) -> pd.DataFrame:
     # join para traer nombre y código de provincia
     addr = addr.merge(prov, how="left", on="province_id")
 
-    # completar columnas solicitadas si faltan
+    # completar columnas si faltan 
     if "address_type" not in addr.columns:
         addr["address_type"] = pd.NA
     if "created_at" not in addr.columns:

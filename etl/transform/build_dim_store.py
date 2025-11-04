@@ -6,7 +6,7 @@ def build_dim_store(data: dict, output_path: Path) -> pd.DataFrame:
     addr  = data["address"].copy()    # address_id, line1, city, province_id, postal_code, country_code, ...
     prov  = data["province"].copy()   # province_id, name, code
 
-    # 1) Merge store + address (con sufijos claros)
+    # 1) Merge store + address 
     store = store.merge(
         addr,
         on="address_id",
@@ -14,7 +14,7 @@ def build_dim_store(data: dict, output_path: Path) -> pd.DataFrame:
         suffixes=("_store", "_addr")
     )
 
-    # 2) Merge con province (evito name_x/name_y)
+    # 2) Merge con province 
     store = store.merge(
         prov.rename(columns={"name": "province_name", "code": "province_code"}),
         on="province_id",

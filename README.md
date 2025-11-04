@@ -107,3 +107,58 @@ Cada hecho tiene su propio esquema estrella, diseñado con [dbdiagram.io](https:
 | **fact_nps_response** | [📊 Star Schema - NPS](assets/star_nps_response.png) |
 
 
+## 4. Consultas CLave 
+
+Para poder calcular los KPIs pedidos y utilizados en las visualizaciones, se crearon medidas DAX en la tabla Medidas en el modelo de Power Bi
+
+### Ticket Promedio
+```dax
+Ticket Promedio ($K) = 
+CALCULATE(
+    SUM(fact_sales_order[total_amount]) /
+    DISTINCTCOUNT(fact_sales_order[id]),
+    fact_sales_order[status_order] IN {"PAID", "FULFILLED"}
+)
+```
+
+### NPS
+```dax
+NPS = 
+VAR Promoters =
+    COUNTROWS(
+        FILTER(
+            fact_nps_response,
+            fact_nps_response[score] >= 9
+        )
+    )
+VAR Detractors =
+    COUNTROWS(
+        FILTER(
+            fact_nps_response,
+            fact_nps_response[score] <= 6
+        )
+    )
+VAR TotalResponses =
+    COUNTROWS(fact_nps_response)
+
+RETURN
+IF(
+    TotalResponses > 0,
+    ( ( Promoters - Detractors ) / TotalResponses ) * 100
+)
+```
+
+### Ventas Totales 
+```dax
+Total Ventas = 
+CALCULATE(
+    SUM(fact_sales_order[total_amount]),
+    fact_sales_order[status_order] IN {"PAID","FULFILLED"}
+)
+```
+
+### Usuarios Activos
+```dax
+Usuarios Activos = 
+DISTINCTCOUNT(fact_web_session[customer_id])
+```
