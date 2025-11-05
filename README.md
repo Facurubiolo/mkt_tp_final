@@ -21,7 +21,7 @@ El proyecto sigue una estructura ETL clásica:
  - warehouse/fact/: Contiene las tablas de hechos desnormalizadas
 4. main.py: El script orquestador que llama a las funciones de extract, transform y load en el orden correcto.
 
-## 🚀 Ejecución
+##  Ejecución
 
 ### 1. Clonar el repositorio
 ```bash
@@ -45,7 +45,7 @@ pip install -r requirements.txt
 python main.py
 ```
 
-## 🧱 2. Supuestos y Diseño del Modelo
+##  2. Supuestos y Diseño del Modelo
 
 ### 🔹 Diseño general
 
@@ -84,7 +84,7 @@ Las tablas de hechos utilizan dichas claves como **claves foráneas (FK)** para 
 
 ---
 
-## 📘 3. Diccionario de Datos
+##  3. Diccionario de Datos
 El Data Warehouse está compuesto por **6 dimensiones** y **6 tablas de hechos**.  
 Cada tabla de dimensión incluye una *surrogate key (SK)* como PK, mientras que las tablas de hechos contienen las FK necesarias para el análisis en esquema estrella.
 
@@ -93,7 +93,7 @@ Cada tabla de dimensión incluye una *surrogate key (SK)* como PK, mientras que 
 | **Dimensiones** | dim_customer, dim_address, dim_product, dim_store, dim_channel, dim_calendar |
 | **Hechos** | fact_sales_order, fact_sales_order_item, fact_payment, fact_shipment, fact_web_session, fact_nps_response |
 
-### 📎 Enlaces a los Esquemas Estrella0
+### Enlaces a los Esquemas Estrella0
 
 Cada hecho tiene su propio esquema estrella, diseñado con [dbdiagram.io](https://dbdiagram.io).  
 
