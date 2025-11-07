@@ -23,9 +23,9 @@ def build_fact_shipment(data: dict, output_path: Path) -> pd.DataFrame:
         "shipping_address_id",
         "channel_id",
         "carrier",
-        "shipped_at_date_id",
+        "shipped_at_date_id", ## surrogate 
         "shipped_at_time",
-        "delivered_at_date_id",
+        "delivered_at_date_id", ## surrogate
         "delivered_at_time",
         "tracking_number"
     ]].rename(columns={"shipment_id": "id"})

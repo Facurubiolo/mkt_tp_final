@@ -4,7 +4,8 @@ from pathlib import Path
 def build_dim_calendar(data: dict, output_path: Path) -> pd.DataFrame:
     # recolecto fechas desde tablas transaccionales
     cols = []
-
+    
+    ## verifico que existan las tablas y columnas antes de colectar y luego lo concateno
     def collect(df_key, col):
         if df_key in data and col in data[df_key].columns:
             s = pd.to_datetime(data[df_key][col], errors="coerce").dropna()

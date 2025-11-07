@@ -2,7 +2,10 @@ import pandas as pd
 from pathlib import Path
 
 def build_fact_nps_response(data: dict, output_path: Path) -> pd.DataFrame:
+    # agarro la tabla cruda
     nps = data["nps_response"].copy()
+    
+    # Proceso las fechas y manejo columna comment que puede no venir (para que no se rompa, por las dudaas)
     if "comment" not in nps.columns:
         nps["comment"] = pd.NA
 
@@ -16,10 +19,11 @@ def build_fact_nps_response(data: dict, output_path: Path) -> pd.DataFrame:
         "channel_id",
         "score",
         "comment",
-        "responded_at_date_id",
-        "responded_at_time"
+        "responded_at_date_id", # surrogate key de fecha
+        "responded_at_time"  
     ]].rename(columns={"nps_id": "id"})
-
+    
+    # creo la surrogate key de esta fact (autoincremental simple)
     fact.insert(0, "nps_response_sk", range(1, len(fact) + 1))
 
     path = Path(output_path) / "fact" / "fact_nps_response.csv"

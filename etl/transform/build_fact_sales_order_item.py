@@ -54,8 +54,8 @@ def build_fact_sales_order_item(data: dict, output_path: Path) -> pd.DataFrame:
         "line_total",
         "order_date_id",
         "order_date",
-        "billing_address_id",
-        "shipping_address_id"
+        "billing_address_id", ## surrogate apuntan a address_sk
+        "shipping_address_id" ## surrogate apuntan a address_sk
     ]].rename(columns={"order_item_id": "id"})
 
     fact.insert(0, "sales_order_item_sk", range(1, len(fact) + 1))
