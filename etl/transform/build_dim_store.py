@@ -2,9 +2,9 @@ import pandas as pd
 from pathlib import Path
 
 def build_dim_store(data: dict, output_path: Path) -> pd.DataFrame:
-    store = data["store"].copy()      # store_id, name, address_id, created_at
-    addr  = data["address"].copy()    # address_id, line1, city, province_id, postal_code, country_code, ...
-    prov  = data["province"].copy()   # province_id, name, code
+    store = data["store"].copy()      
+    addr  = data["address"].copy()    
+    prov  = data["province"].copy()   
 
     # 1) Merge store + address 
     store = store.merge(
@@ -24,7 +24,7 @@ def build_dim_store(data: dict, output_path: Path) -> pd.DataFrame:
     # 3) Surrogate key
     store.insert(0, "store_sk", range(1, len(store) + 1))
 
-    # 4) Elegir columnas seguras 
+    # 4) Elijo columnas seguras 
     store_name_col = "name_store" if "name_store" in store.columns else "name"
     created_col    = "created_at_store" if "created_at_store" in store.columns else "created_at"
 
@@ -41,7 +41,8 @@ def build_dim_store(data: dict, output_path: Path) -> pd.DataFrame:
         "country_code",
         created_col
     ]
-    # filtrar por si alguna no existe 
+    
+    # filtrar por si alguna no existe (por las dudas)
     cols = [c for c in cols if c in store.columns]
 
     dim = store[cols].drop_duplicates().rename(columns={
@@ -49,7 +50,7 @@ def build_dim_store(data: dict, output_path: Path) -> pd.DataFrame:
         created_col: "created_at"
     })
 
-    # 6) Guardamos
+   
     path = Path(output_path) / "dim" / "dim_store.csv"
     path.parent.mkdir(parents=True, exist_ok=True)
     dim.to_csv(path, index=False)

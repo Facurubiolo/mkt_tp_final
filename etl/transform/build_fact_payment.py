@@ -3,9 +3,11 @@ from pathlib import Path
 
 def build_fact_payment(data: dict, output_path: Path) -> pd.DataFrame:
     pay = data["payment"].copy()
+    
+    # traigo columnas útiles de sales_order
     so = data["sales_order"][["order_id","customer_id","billing_address_id","channel_id","store_id"]].copy()
 
-    # traigo datos de cabecera
+    # uno cada pago con su pedido usando order_id
     pay = pay.merge(so, how="left", on="order_id")
 
     # date_id y hora del pago

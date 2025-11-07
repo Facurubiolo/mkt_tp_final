@@ -3,12 +3,12 @@ from pathlib import Path
 
 def build_dim_address(data: dict, output_path: Path) -> pd.DataFrame:
     addr = data["address"].copy()
-    prov = data["province"].copy()  # province_id, name, code
+    prov = data["province"].copy()  
 
     # join para traer nombre y código de provincia
     addr = addr.merge(prov, how="left", on="province_id")
 
-    # completar columnas si faltan 
+    # completo columnas si faltan 
     if "address_type" not in addr.columns:
         addr["address_type"] = pd.NA
     if "created_at" not in addr.columns:
