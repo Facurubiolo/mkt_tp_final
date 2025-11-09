@@ -28,6 +28,8 @@ def build_fact_payment(data: dict, output_path: Path) -> pd.DataFrame:
         "paid_at_time",
         "transaction_ref"
     ]].rename(columns={"payment_id": "id", "status": "status_payment"})
+    
+    fact["store_id"] = pd.to_numeric(fact["store_id"], errors="coerce").astype("Int64")
 
     fact.insert(0, "payment_sk", range(1, len(fact) + 1))
 
