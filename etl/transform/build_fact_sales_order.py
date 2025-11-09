@@ -51,6 +51,7 @@ def build_fact_sales_order(data: dict, output_path: Path) -> pd.DataFrame:
         "total_amount"
     ]].rename(columns={"order_id": "id", "status": "status_order"})
 
+    fact["store_id"] = pd.to_numeric(fact["store_id"], errors="coerce").astype("Int64")
     # creo la surrogate key propia de la fact
     fact.insert(0, "sales_order_sk", range(1, len(fact) + 1))
 
