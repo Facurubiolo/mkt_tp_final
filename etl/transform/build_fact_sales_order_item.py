@@ -37,6 +37,9 @@ def build_fact_sales_order_item(data: dict, output_path: Path) -> pd.DataFrame:
     so["order_date"] = pd.to_datetime(so["order_date"], errors="coerce")
     so["order_date_id"] = so["order_date"].dt.strftime("%Y%m%d").astype("Int64")
     so["order_date"] = so["order_date"].dt.strftime("%Y-%m-%d")
+    
+   
+
 
     
     # traigo customer/channel/store y fecha desde cabecera
@@ -57,6 +60,8 @@ def build_fact_sales_order_item(data: dict, output_path: Path) -> pd.DataFrame:
         "billing_address_id", ## surrogate apuntan a address_sk
         "shipping_address_id" ## surrogate apuntan a address_sk
     ]].rename(columns={"order_item_id": "id"})
+
+    fact["store_id"] = pd.to_numeric(fact["store_id"], errors="coerce").astype("Int64")
 
     fact.insert(0, "sales_order_item_sk", range(1, len(fact) + 1))
 
