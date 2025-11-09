@@ -56,8 +56,7 @@ El modelo del Data Warehouse se construyó siguiendo una **arquitectura en estre
 - **6 tablas de dimensiones (DIM)**
 - **6 tablas de hechos (FACT)**
 
-Cada tabla de dimensión contiene una **surrogate key (clave artificial incremental)** que se utiliza como **clave primaria (PK)**.  
-Las tablas de hechos utilizan dichas claves como **claves foráneas (FK)** para permitir la integración y análisis cruzado.
+
 
 ---
 
