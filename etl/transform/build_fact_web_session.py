@@ -35,6 +35,7 @@ def build_fact_web_session(data: dict, output_path: Path) -> pd.DataFrame:
         "device"
     ]].rename(columns={"session_id": "id"})
 
+    ws["customer_id"] = pd.to_numeric(ws["customer_id"], errors="coerce").astype("Int64")
     
     fact.insert(0, "web_session_sk", range(1, len(fact) + 1))
 
