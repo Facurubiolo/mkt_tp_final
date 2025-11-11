@@ -8,7 +8,7 @@ Repositorio del trabajo práctico final de la materia.
 
 Este proyecto implementa un pipeline **ETL completo** para la materia *Introducción al Marketing y los Negocios Digitales*, utilizando datos crudos (`raw/*.csv`) y generando un **Data Warehouse** con tablas de dimensiones y hechos en la carpeta `warehouse/`.
 
-**Dashboard Final (PowerBI):**  [Click aqui para ver el Dashboard](https://app.powerbi.com/view?r=eyJrIjoiZDBlNWI1ZTQtYWNiNS00MzJjLWE3Y2EtYTk3NDAxZDMyNzkxIiwidCI6IjNlMDUxM2Q2LTY4ZmEtNDE2ZS04ZGUxLTZjNWNkYzMxOWZmYSIsImMiOjR9)
+**Dashboard Final (PowerBI):**  [Click aqui para ver el Dashboard](https://app.powerbi.com/view?r=eyJrIjoiZDBlNWI1ZTQtYWNiNS00MzJjLWE3Y2EtYTk3NDAxZDMyNzkxIiwidCI6IjNlMDUxM2Q2LTY4ZmEtNDE2ZS04ZGUxLTZjNWNkYzMxOWZmYSIsImMiOjR9&pageName=0be84ea9ae3bfa95c784)
 
 ## Arquitectura del Proyecto
 El proyecto sigue una estructura ETL clásica:
