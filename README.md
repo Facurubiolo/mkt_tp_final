@@ -384,3 +384,11 @@ Costo Total Envíos =
 SUM( fact_sales_order[shipping_fee]) 
 ```
 
+## 5. Licencia y reconocimiento
+
+Este proyecto fue desarrollado por **Facundo Rubiolo** en el marco de la materia *Integración de Marketing* de la Licenciatura en Ciencia de Datos de la Universidad Austral (2025).
+
+Los archivos originales de datos (carpeta `/raw`) y el diagrama entidad–relación (`DER.png`) provienen del repositorio académico del profesor **Augusto Carmona**, utilizados únicamente como base para la práctica de modelado, transformación y análisis de datos.
+
+© 2025 **Facundo Rubiolo** — MIT License.  
+Todos los derechos reservados sobre los desarrollos, documentación y arquitectura del proyecto.
