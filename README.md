@@ -390,5 +390,5 @@ Este proyecto fue desarrollado por **Facundo Rubiolo** en el marco de la materia
 
 Los archivos originales de datos (carpeta `/raw`) y el diagrama entidad–relación (`DER.png`) provienen del repositorio académico del profesor **Augusto Carmona**, utilizados únicamente como base para la práctica de modelado, transformación y análisis de datos.
 
-© 2025 **Facundo Rubiolo** — MIT License.  
-Todos los derechos reservados sobre los desarrollos, documentación y arquitectura del proyecto.
+> © 2025 **Facundo Rubiolo** — MIT License.  
+> Todos los derechos reservados sobre los desarrollos, documentación y arquitectura del proyecto.
