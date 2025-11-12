@@ -23,7 +23,7 @@ El proyecto sigue una estructura ETL clásica:
  - warehouse/fact/: Contiene las tablas de hechos desnormalizadas
 4. main.py: El script orquestador que llama a las funciones de extract, transform y load en el orden correcto.
 
-##  Ejecución
+##  1.  Ejecución
 
 ### 1. Clonar el repositorio
 ```bash
