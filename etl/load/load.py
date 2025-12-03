@@ -80,3 +80,4 @@ def run_pipeline():
 # Permite ejecutar este archivo directamente
 if __name__ == "__main__":
     run_pipeline()
+# agrego comentario
